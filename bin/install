@@ -6,7 +6,7 @@ set -euo pipefail
 source "$(dirname $0)/../lib/utils.sh"
 
 install_ruby() {
-  ensure_ruby_build_setup
+  ensure_ruby_install_setup
 
   local install_type=$1
   local version=$2
@@ -26,20 +26,11 @@ install_ruby() {
     patches=$(fetch_patches "$RUBY_APPLY_PATCHES")
   fi
 
-  if [[ -n "${RUBY_BUILD_OPTS:-}" ]]; then
-    opts="$opts $RUBY_BUILD_OPTS"
+  if [[ -n "${RUBY_INSTALL_OPTS:-}" ]]; then
+    opts="$opts $RUBY_INSTALL_OPTS"
   fi
 
-  set +e
-  matching_version=$(is_version_valid "$version")
-  set -e
-
-  if [[ -z "$matching_version" ]]; then
-    errorexit "Version not found"
-  fi
-
-  # shellcheck disable=SC2086
-  echo "$patches" | $(ruby_build_path) ${opts} "$version" "$install_path"
+  $(ruby_install_path) ${opts} ruby "$version" --install-dir "$install_path/$version"
 }
 
 is_version_valid() {
