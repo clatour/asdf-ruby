@@ -30,7 +30,7 @@ install_ruby() {
     opts="$opts $RUBY_INSTALL_OPTS"
   fi
 
-  $(ruby_install_path) ${opts} ruby "$version" --install-dir "$install_path/$version"
+  $(ruby_install_path) ${opts} ruby "$version" --install-dir "$install_path"
 }
 
 is_version_valid() {

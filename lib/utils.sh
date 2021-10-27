@@ -9,7 +9,7 @@ errorexit() {
   echoerr "$1"
   exit 1
 }
-t
+
 ensure_ruby_install_setup() {
   ensure_ruby_install_installed
 }
